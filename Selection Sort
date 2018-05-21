@@ -1,26 +1,26 @@
 #include <iostream>
 using namespace std;
 
-int main () {
+int main(){
 
-int data[10001], smallest,n,i,j;
+int data[100];
+int terkecil, n;
 
-cin>>n;
-
-for(i=0;i<n;i++){
+cout<<"Masukkan angka : ";
+for(int i=0;i<n;i++){
     cin>>data[i];
-}
+} cout<<endl;
 
-for(i=0;i<n;i++){
-    smallest=i;
-    for(j=i;j<n;j++){
-        if (data[j]<data[smallest]){
-            smallest=j;
+for(int i=0;i<n;i++){
+    terkecil=i;
+    for(int j=i;j<n;j++){
+        if (data[j]<data[terkecil]){
+            terkecil=j;
         }
     }
-    swap(data[i],data[smallest]);
+    swap(data[i],data[terkecil]);
 }
-for (i=0;i<n;i++){
+for (int i=0;i<n;i++){
     cout<<data[i]<<' ';
 }
 
