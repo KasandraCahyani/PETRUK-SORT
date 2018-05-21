@@ -1,82 +1,67 @@
-#include <fstream>
-#include<iostream>
-#include<conio.h>
-
+#include <iostream>
 using namespace std;
-
-void merge(int arr[], int start, int middle, int end)
-{
-    int i, j, k;
-    int n1 = middle - start + 1;
-    int n2 =  end - middle;
-
-    int L[10000], R[10000];
-
-    for (i = 0; i < n1; i++)
-    L[i] = arr[start + i];
-    for (j = 0; j < n2; j++)
-    R[j] = arr[middle + 1+ j];
-
-    i = 0;
-    j = 0;
-    k = start;
-    while (i < n1 && j < n2)
-    {
-    if (L[i] <= R[j])
-    {
-        arr[k] = L[i];
+ 
+void merge(int a[], int low, int  mid, int high){
+    int i=low;
+	int j=mid + 1;
+    int k=0;
+    int *temp = new int[high-low+1];
+    while(i<=mid && j<=high){
+        if(a[i]<=a[j]){
+            temp[k]=a[i];
+            k++;
+            i++;
+        }
+        else{
+            temp[k]=a[j];
+            k++;
+            j++;
+    	}
+    }
+    while(i<=mid){
+        temp[k]=a[i];
+        k++;
         i++;
     }
-    else
-    {
-        arr[k] = R[j];
+    while(j<=high){
+        temp[k]=a[j];
+        k++;
         j++;
     }
-    k++;
+    for(k=0, i=low; i<=high; ++i, ++k){
+        a[i]=temp[k];
     }
+    delete []temp;
+}
 
-    while (i < n1)
-    {
-    arr[k] = L[i];
-    i++;
-    k++;
-    }
-
-    while (j < n2)
-    {
-    arr[k] = R[j];
-    j++;
-    k++;
+void merge_sort1(int a[], int low, int high){
+    int mid;
+    if(low < high){
+        mid=(low + high)/2;
+        merge_sort1(a, low, mid);
+        merge_sort1(a, mid+1, high);
+        merge(a, low, mid, high);
     }
 }
 
-void mergeSort(int arr[], int start, int end)
-{
-    if (start < end)
-    {
-    int middle =start+(end-start)/2;
-
-    mergeSort(arr, start, middle);
-    mergeSort(arr, middle+1, end);
-
-    merge(arr, start, middle, end);
-    }
+void merge_sort(int a[], int a_size){
+    merge_sort1(a, 0, a_size-1);
 }
 
-int main(){
-	int data[9999];
-	int n = 0;
-	int tmp;
-	ifstream file_masukan ("10.csv");
-
-	file_masukan>>data[n];
-	while (file_masukan) {
-		n++;
-		file_masukan>>data[n];
-	}
-	
-    mergeSort(data, 0, n-1);
-    for(int i=0;i<n;i++)
-        cout<<data[i]<<" ";
-    return 0;
+void cetak(int *data, int n) {
+	for (int i=0;i<n;++i){
+		cout<<data[i]<<" ";
+	}	
+	cout<< endl;
+}
+ 
+int main() {
+  int data[] = {58, 2, 34, 70, 66, 17 , 21, 0, 49, 88};
+  int n = sizeof(data)/sizeof(data[0]);
+	  cout<<"DATA :"<<endl;
+	  cetak(data, n);
+	  merge_sort(data, n);
+	  cout<<"Setelah Merge Sort :"<<endl;
+	  cetak(data, n);
+  return (0);
 }
