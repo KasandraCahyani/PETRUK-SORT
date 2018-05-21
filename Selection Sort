@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main () {
+
+int data[10001], smallest,n,i,j;
+
+cin>>n;
+
+for(i=0;i<n;i++){
+    cin>>data[i];
+}
+
+for(i=0;i<n;i++){
+    smallest=i;
+    for(j=i;j<n;j++){
+        if (data[j]<data[smallest]){
+            smallest=j;
+        }
+    }
+    swap(data[i],data[smallest]);
+}
+for (i=0;i<n;i++){
+    cout<<data[i]<<' ';
+}
+
+}
